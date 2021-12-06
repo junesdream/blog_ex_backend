@@ -6,6 +6,7 @@ import authRoute from "./routes/auth.js";
 import userRoute from "./routes/users.js";
 import postRoute from "./routes/posts.js";
 import categoryRoute from "./routes/categories.js";
+import snapRoute from "./routes/snaps.js";
 import multer from "multer";
 import path from "path";
 import cors from "cors";
@@ -44,11 +45,11 @@ mongoose
 // 		? cb(null, true)
 // 		: //throw an error if the mimetype is not an image, i.e. does not have extension jpg, jpeg or png
 // 		  cb(new Error("please upload only jpeg/jpg/png files"), false);
-// };	
+// };
 
 const storage = multer.diskStorage({
 	destination: (req, file, cb) => {
-		console.log("uploading file: ", file)
+		console.log("uploading file: ", file);
 		cb(null, "images");
 	},
 	filename: (req, file, cb) => {
@@ -59,7 +60,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 app.post("/api/upload", upload.single("file"), (req, res) => {
-	console.log()
+	console.log();
 	res.status(200).json("file has benn uploaded");
 });
 
@@ -67,6 +68,8 @@ app.use("/api/auth", authRoute);
 app.use("/api/users", userRoute);
 app.use("/api/posts", postRoute);
 app.use("/api/categories", categoryRoute);
+app.use("/api/snaps", snapRoute);
+
 
 app.get("/", (req, res) => {
 	res.send("Hi, alles klar?!");
@@ -88,3 +91,5 @@ app.listen(port, () => {
 // })
 // .then(console.log("Connected to MOngDB"))
 // .catch((err) => console.log(err));
+
+
